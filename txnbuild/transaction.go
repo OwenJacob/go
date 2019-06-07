@@ -124,7 +124,13 @@ func (tx *Transaction) Build() error {
 
 	// Set a default fee, if it hasn't been set yet
 	tx.SetDefaultFee()
-
+	
+	// Initialise transaction envelope
+	if tx.xdrEnvelope == nil {
+		tx.xdrEnvelope = &xdr.TransactionEnvelope{}
+		tx.xdrEnvelope.Tx = tx.xdrTransaction
+	}
+	
 	return nil
 }
 
@@ -133,11 +139,6 @@ func (tx *Transaction) Build() error {
 func (tx *Transaction) Sign(kps ...*keypair.Full) error {
 	// TODO: Only sign if Transaction has been previously built
 	// TODO: Validate network set before sign
-	// Initialise transaction envelope
-	if tx.xdrEnvelope == nil {
-		tx.xdrEnvelope = &xdr.TransactionEnvelope{}
-		tx.xdrEnvelope.Tx = tx.xdrTransaction
-	}
 
 	// Hash the transaction
 	hash, err := tx.Hash()
