@@ -1,12 +1,10 @@
 /*
 Package txnbuild implements transactions and operations on the Stellar network.
-
 This library provides an interface to the Stellar transaction model. It supports the building of Go applications on
 top of the Stellar network (https://www.stellar.org/). Transactions constructed by this library may be submitted
 to any Horizon instance for processing onto the ledger, using any Stellar SDK client. The recommended client for Go
 programmers is horizonclient (https://github.com/stellar/go/tree/master/clients/horizonclient). Together, these two
 libraries provide a complete Stellar SDK.
-
 For more information and further examples, see https://www.stellar.org/developers/go/reference/index.html.
 */
 package txnbuild
@@ -124,13 +122,13 @@ func (tx *Transaction) Build() error {
 
 	// Set a default fee, if it hasn't been set yet
 	tx.SetDefaultFee()
-	
+
 	// Initialise transaction envelope
 	if tx.xdrEnvelope == nil {
 		tx.xdrEnvelope = &xdr.TransactionEnvelope{}
 		tx.xdrEnvelope.Tx = tx.xdrTransaction
 	}
-	
+
 	return nil
 }
 
