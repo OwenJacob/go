@@ -18,7 +18,7 @@ var ErrAccountExists error = errors.New(fmt.Sprintf("createAccountAlreadyExist (
 type Minion struct {
 	Account           Account
 	Keypair           *keypair.Full
-	BotAccount        txnbuild.Account
+	BotAccount        string
 	BotKeypair        *keypair.Full
 	Horizon           *horizonclient.Client
 	Network           string
@@ -102,7 +102,7 @@ func (minion *Minion) checkHandleBadSequence(err *horizonclient.Error) {
 func (minion *Minion) makeTx(destAddress string) (string, error) {
 	createAccountOp := txnbuild.CreateAccount{
 		Destination:   destAddress,
-		SourceAccount: minion.BotAccount.GetAccountID(),
+		SourceAccount: minion.BotAccount,
 		Amount:        minion.StartingBalance,
 	}
 	txn := txnbuild.Transaction{
