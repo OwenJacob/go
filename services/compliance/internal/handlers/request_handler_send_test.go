@@ -212,7 +212,7 @@ func TestRequestHandlerSendValidParams(t *testing.T) {
 		Destination:   "GAMVF7G4GJC4A7JMFJWLUAEIBFQD5RT3DCB5DC5TJDEKQBBACQ4JZVEE",
 		Amount:        "20",
 		Asset:         txnbuild.CreditAsset{Code: "USD", Issuer: "GAMVF7G4GJC4A7JMFJWLUAEIBFQD5RT3DCB5DC5TJDEKQBBACQ4JZVEE"},
-		SourceAccount: &txnbuild.SimpleAccount{AccountID: "GAW77Z6GPWXSODJOMF5L5BMX6VMYGEJRKUNBC2CZ725JTQZORK74HQQD"},
+		SourceAccount: "GAW77Z6GPWXSODJOMF5L5BMX6VMYGEJRKUNBC2CZ725JTQZORK74HQQD",
 	}
 
 	tx := txnbuild.Transaction{
@@ -358,7 +358,7 @@ func TestRequestHandlerSendValidParams(t *testing.T) {
 		Destination:   "GAMVF7G4GJC4A7JMFJWLUAEIBFQD5RT3DCB5DC5TJDEKQBBACQ4JZVEE",
 		DestAmount:    "20",
 		DestAsset:     txnbuild.CreditAsset{Code: "USD", Issuer: "GAMVF7G4GJC4A7JMFJWLUAEIBFQD5RT3DCB5DC5TJDEKQBBACQ4JZVEE"},
-		SourceAccount: &txnbuild.SimpleAccount{AccountID: "GAW77Z6GPWXSODJOMF5L5BMX6VMYGEJRKUNBC2CZ725JTQZORK74HQQD"},
+		SourceAccount: "GAW77Z6GPWXSODJOMF5L5BMX6VMYGEJRKUNBC2CZ725JTQZORK74HQQD",
 		Path:          []txnbuild.Asset{txnbuild.NativeAsset{}, txnbuild.CreditAsset{Code: "EUR", Issuer: "GAF3PBFQLH57KPECN4GRGHU5NUZ3XXKYYWLOTBIRJMBYHPUBWANIUCZU"}},
 	}
 
@@ -512,7 +512,7 @@ func TestRequestHandlerSendValidParams(t *testing.T) {
 		Destination:   "GAMVF7G4GJC4A7JMFJWLUAEIBFQD5RT3DCB5DC5TJDEKQBBACQ4JZVEE",
 		Amount:        "20",
 		Asset:         txnbuild.CreditAsset{Code: "USD", Issuer: "GAMVF7G4GJC4A7JMFJWLUAEIBFQD5RT3DCB5DC5TJDEKQBBACQ4JZVEE"},
-		SourceAccount: &txnbuild.SimpleAccount{AccountID: "GAW77Z6GPWXSODJOMF5L5BMX6VMYGEJRKUNBC2CZ725JTQZORK74HQQD"},
+		SourceAccount: "GAW77Z6GPWXSODJOMF5L5BMX6VMYGEJRKUNBC2CZ725JTQZORK74HQQD",
 	}
 
 	tx = txnbuild.Transaction{
