@@ -1018,7 +1018,7 @@ func TestFromXDR(t *testing.T) {
 	assert.IsType(t, newTx.Operations[0], &Payment{}, "Operation types should match")
 	paymentOp, ok1 := newTx.Operations[0].(*Payment)
 	assert.Equal(t, true, ok1)
-	assert.Equal(t, "GATBMIXTHXYKSUZSZUEJKACZ2OS2IYUWP2AIF3CA32PIDLJ67CH6Y5UY", paymentOp.SourceAccount.GetAccountID(), "Operation source should match")
+	assert.Equal(t, "GATBMIXTHXYKSUZSZUEJKACZ2OS2IYUWP2AIF3CA32PIDLJ67CH6Y5UY", paymentOp.SourceAccount, "Operation source should match")
 	assert.Equal(t, "GDGEQS64ISS6Y2KDM5V67B6LXALJX4E7VE4MIA54NANSUX5MKGKBZM5G", paymentOp.Destination, "Operation destination should match")
 	assert.Equal(t, "874.0000000", paymentOp.Amount, "Operation amount should match")
 
@@ -1040,7 +1040,7 @@ func TestFromXDR(t *testing.T) {
 	assert.IsType(t, newTx2.Operations[1], &ManageData{}, "Operation types should match")
 	op1, ok1 := newTx2.Operations[0].(*ChangeTrust)
 	assert.Equal(t, true, ok1)
-	assert.Equal(t, "GD4Q3HT4IMFTIYLYRPTJQ7XLKROGGEUV74WTL26KPEWUTF72AJKGSJS7", op1.SourceAccount.GetAccountID(), "Operation source should match")
+	assert.Equal(t, "GD4Q3HT4IMFTIYLYRPTJQ7XLKROGGEUV74WTL26KPEWUTF72AJKGSJS7", op1.SourceAccount, "Operation source should match")
 	assetType, err := op1.Line.GetType()
 	assert.NoError(t, err)
 
@@ -1051,7 +1051,7 @@ func TestFromXDR(t *testing.T) {
 
 	op2, ok2 := newTx2.Operations[1].(*ManageData)
 	assert.Equal(t, true, ok2)
-	assert.Equal(t, nil, op2.SourceAccount, "Operation source should match")
+	assert.Equal(t, "", op2.SourceAccount, "Operation source should match")
 	assert.Equal(t, "test", op2.Name, "Name should match")
 	assert.Equal(t, "value", string(op2.Value), "Value should match")
 }
@@ -1131,11 +1131,11 @@ func TestSignWithSecretKey(t *testing.T) {
 	kp1 := newKeypair1()
 	txSource := NewSimpleAccount(kp0.Address(), int64(9605939170639897))
 	tx1Source := NewSimpleAccount(kp0.Address(), int64(9605939170639897))
-	opSource := NewSimpleAccount(kp1.Address(), 0)
+	opSource := kp1.Address()
 	createAccount := CreateAccount{
 		Destination:   "GCCOBXW2XQNUSL467IEILE6MMCNRR66SSVL4YQADUNYYNUVREF3FIV2Z",
 		Amount:        "10",
-		SourceAccount: &opSource,
+		SourceAccount: opSource,
 	}
 	tx := Transaction{
 		SourceAccount: &txSource,
@@ -1167,11 +1167,11 @@ func TestVerifyTxSignatureUnsignedTx(t *testing.T) {
 	kp0 := newKeypair0()
 	kp1 := newKeypair1()
 	txSource := NewSimpleAccount(kp0.Address(), int64(9605939170639897))
-	opSource := NewSimpleAccount(kp1.Address(), 0)
+	opSource := kp1.Address()
 	createAccount := CreateAccount{
 		Destination:   "GCCOBXW2XQNUSL467IEILE6MMCNRR66SSVL4YQADUNYYNUVREF3FIV2Z",
 		Amount:        "10",
-		SourceAccount: &opSource,
+		SourceAccount: opSource,
 	}
 	tx := Transaction{
 		SourceAccount: &txSource,
@@ -1194,11 +1194,11 @@ func TestVerifyTxSignatureSingle(t *testing.T) {
 	kp0 := newKeypair0()
 	kp1 := newKeypair1()
 	txSource := NewSimpleAccount(kp0.Address(), int64(9605939170639897))
-	opSource := NewSimpleAccount(kp1.Address(), 0)
+	opSource := kp1.Address()
 	createAccount := CreateAccount{
 		Destination:   "GCCOBXW2XQNUSL467IEILE6MMCNRR66SSVL4YQADUNYYNUVREF3FIV2Z",
 		Amount:        "10",
-		SourceAccount: &opSource,
+		SourceAccount: opSource,
 	}
 	tx := Transaction{
 		SourceAccount: &txSource,
@@ -1220,11 +1220,11 @@ func TestVerifyTxSignatureMultiple(t *testing.T) {
 	kp0 := newKeypair0()
 	kp1 := newKeypair1()
 	txSource := NewSimpleAccount(kp0.Address(), int64(9605939170639897))
-	opSource := NewSimpleAccount(kp1.Address(), 0)
+	opSource := kp1.Address()
 	createAccount := CreateAccount{
 		Destination:   "GCCOBXW2XQNUSL467IEILE6MMCNRR66SSVL4YQADUNYYNUVREF3FIV2Z",
 		Amount:        "10",
-		SourceAccount: &opSource,
+		SourceAccount: opSource,
 	}
 	tx := Transaction{
 		SourceAccount: &txSource,
@@ -1248,11 +1248,11 @@ func TestVerifyTxSignatureInvalid(t *testing.T) {
 	kp0 := newKeypair0()
 	kp1 := newKeypair1()
 	txSource := NewSimpleAccount(kp0.Address(), int64(9605939170639897))
-	opSource := NewSimpleAccount(kp1.Address(), 0)
+	opSource := kp1.Address()
 	createAccount := CreateAccount{
 		Destination:   "GCCOBXW2XQNUSL467IEILE6MMCNRR66SSVL4YQADUNYYNUVREF3FIV2Z",
 		Amount:        "10",
-		SourceAccount: &opSource,
+		SourceAccount: opSource,
 	}
 	tx := Transaction{
 		SourceAccount: &txSource,
@@ -1336,11 +1336,11 @@ func TestVerifyChallengeTxInvalidOp(t *testing.T) {
 
 	// invalid operation type
 	txSource := NewSimpleAccount(kp0.Address(), -1)
-	opSource := NewSimpleAccount(kp1.Address(), 0)
+	opSource := kp1.Address()
 	createAccount := CreateAccount{
 		Destination:   "GCCOBXW2XQNUSL467IEILE6MMCNRR66SSVL4YQADUNYYNUVREF3FIV2Z",
 		Amount:        "10",
-		SourceAccount: &opSource,
+		SourceAccount: opSource,
 	}
 	newTx := Transaction{
 		SourceAccount: &txSource,
@@ -1388,7 +1388,7 @@ func TestVerifyChallengeTxSequenceNumber(t *testing.T) {
 
 	// invalid sequence number
 	txSource := NewSimpleAccount(kp0.Address(), 100)
-	opSource := NewSimpleAccount(kp1.Address(), 0)
+	opSource := kp1.Address()
 	randomNonce, err := generateRandomNonce(48)
 	assert.NoError(t, err)
 	randomNonceToString := base64.StdEncoding.EncodeToString(randomNonce)
@@ -1396,7 +1396,7 @@ func TestVerifyChallengeTxSequenceNumber(t *testing.T) {
 		SourceAccount: &txSource,
 		Operations: []Operation{
 			&ManageData{
-				SourceAccount: &opSource,
+				SourceAccount: opSource,
 				Name:          "sdf auth",
 				Value:         []byte(randomNonceToString),
 			},
@@ -1423,7 +1423,7 @@ func TestVerifyChallengeTxRandomNonce(t *testing.T) {
 	kp1 := newKeypair1()
 
 	txSource := NewSimpleAccount(kp0.Address(), -1)
-	opSource := NewSimpleAccount(kp1.Address(), 0)
+	opSource := kp1.Address()
 	// invalid nonce
 	randomNonce, err := generateRandomNonce(40)
 	assert.NoError(t, err)
@@ -1432,7 +1432,7 @@ func TestVerifyChallengeTxRandomNonce(t *testing.T) {
 		SourceAccount: &txSource,
 		Operations: []Operation{
 			&ManageData{
-				SourceAccount: &opSource,
+				SourceAccount: opSource,
 				Name:          "sdf auth",
 				Value:         []byte(randomNonceToString),
 			},

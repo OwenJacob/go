@@ -12,11 +12,11 @@ func TestAccountMergeMultSigners(t *testing.T) {
 	txSourceAccount := NewSimpleAccount(kp0.Address(), int64(9605939170639898))
 
 	kp1 := newKeypair1()
-	opSourceAccount := NewSimpleAccount(kp1.Address(), int64(9606132444168199))
+	opSourceAccount := kp1.Address()
 
 	accountMerge := AccountMerge{
 		Destination:   "GAS4V4O2B7DW5T7IQRPEEVCRXMDZESKISR7DVIGKZQYYV3OSQ5SH5LVP",
-		SourceAccount: &opSourceAccount,
+		SourceAccount: opSourceAccount,
 	}
 
 	tx := Transaction{
@@ -33,7 +33,7 @@ func TestAccountMergeMultSigners(t *testing.T) {
 
 func TestAllowTrustMultSigners(t *testing.T) {
 	kp0 := newKeypair0()
-	opSourceAccount := NewSimpleAccount(kp0.Address(), int64(9605939170639898))
+	opSourceAccount := kp0.Address()
 
 	kp1 := newKeypair1()
 	txSourceAccount := NewSimpleAccount(kp1.Address(), int64(9606132444168199))
@@ -43,7 +43,7 @@ func TestAllowTrustMultSigners(t *testing.T) {
 		Trustor:       kp1.Address(),
 		Type:          issuedAsset,
 		Authorize:     true,
-		SourceAccount: &opSourceAccount,
+		SourceAccount: opSourceAccount,
 	}
 
 	tx := Transaction{
@@ -63,11 +63,11 @@ func TestBumpSequenceMultSigners(t *testing.T) {
 	txSourceAccount := NewSimpleAccount(kp0.Address(), int64(9605939170639898))
 
 	kp1 := newKeypair1()
-	opSourceAccount := NewSimpleAccount(kp1.Address(), int64(9606132444168199))
+	opSourceAccount := kp1.Address()
 
 	bumpSequence := BumpSequence{
 		BumpTo:        9606132444168300,
-		SourceAccount: &opSourceAccount,
+		SourceAccount: opSourceAccount,
 	}
 
 	tx := Transaction{
@@ -87,12 +87,12 @@ func TestChangeTrustMultSigners(t *testing.T) {
 	txSourceAccount := NewSimpleAccount(kp0.Address(), int64(9605939170639898))
 
 	kp1 := newKeypair1()
-	opSourceAccount := NewSimpleAccount(kp1.Address(), int64(9606132444168199))
+	opSourceAccount := kp1.Address()
 
 	changeTrust := ChangeTrust{
 		Line:          CreditAsset{"ABCD", kp0.Address()},
 		Limit:         "10",
-		SourceAccount: &opSourceAccount,
+		SourceAccount: opSourceAccount,
 	}
 
 	tx := Transaction{
@@ -111,12 +111,12 @@ func TestCreateAccountMultSigners(t *testing.T) {
 	txSourceAccount := NewSimpleAccount(kp0.Address(), int64(9605939170639898))
 
 	kp1 := newKeypair1()
-	opSourceAccount := NewSimpleAccount(kp1.Address(), int64(9606132444168199))
+	opSourceAccount := kp1.Address()
 
 	createAccount := CreateAccount{
 		Destination:   "GCCOBXW2XQNUSL467IEILE6MMCNRR66SSVL4YQADUNYYNUVREF3FIV2Z",
 		Amount:        "10",
-		SourceAccount: &opSourceAccount,
+		SourceAccount: opSourceAccount,
 	}
 
 	tx := Transaction{
@@ -136,14 +136,14 @@ func TestCreatePassiveSellOfferMultSigners(t *testing.T) {
 	txSourceAccount := NewSimpleAccount(kp0.Address(), int64(9605939170639898))
 
 	kp1 := newKeypair1()
-	opSourceAccount := NewSimpleAccount(kp1.Address(), int64(9606132444168199))
+	opSourceAccount := kp1.Address()
 
 	createPassiveOffer := CreatePassiveSellOffer{
 		Selling:       NativeAsset{},
 		Buying:        CreditAsset{"ABCD", kp0.Address()},
 		Amount:        "10",
 		Price:         "1.0",
-		SourceAccount: &opSourceAccount,
+		SourceAccount: opSourceAccount,
 	}
 
 	tx := Transaction{
@@ -163,10 +163,10 @@ func TestInflationMultSigners(t *testing.T) {
 	txSourceAccount := NewSimpleAccount(kp0.Address(), int64(9605939170639898))
 
 	kp1 := newKeypair1()
-	opSourceAccount := NewSimpleAccount(kp1.Address(), int64(9606132444168199))
+	opSourceAccount := kp1.Address()
 
 	inflation := Inflation{
-		SourceAccount: &opSourceAccount,
+		SourceAccount: opSourceAccount,
 	}
 
 	tx := Transaction{
@@ -186,12 +186,12 @@ func TestManageDataMultSigners(t *testing.T) {
 	txSourceAccount := NewSimpleAccount(kp0.Address(), int64(9605939170639898))
 
 	kp1 := newKeypair1()
-	opSourceAccount := NewSimpleAccount(kp1.Address(), int64(9606132444168199))
+	opSourceAccount := kp1.Address()
 
 	manageData := ManageData{
 		Name:          "Fruit preference",
 		Value:         []byte("Apple"),
-		SourceAccount: &opSourceAccount,
+		SourceAccount: opSourceAccount,
 	}
 
 	tx := Transaction{
@@ -211,13 +211,13 @@ func TestManageOfferCreateMultSigners(t *testing.T) {
 	txSourceAccount := NewSimpleAccount(kp0.Address(), int64(9605939170639898))
 
 	kp1 := newKeypair1()
-	opSourceAccount := NewSimpleAccount(kp1.Address(), int64(9606132444168199))
+	opSourceAccount := kp1.Address()
 
 	selling := NativeAsset{}
 	buying := CreditAsset{"ABCD", kp0.Address()}
 	sellAmount := "100"
 	price := "0.01"
-	createOffer, err := CreateOfferOp(selling, buying, sellAmount, price, &opSourceAccount)
+	createOffer, err := CreateOfferOp(selling, buying, sellAmount, price, opSourceAccount)
 	check(err)
 
 	tx := Transaction{
@@ -237,10 +237,10 @@ func TestManageOfferDeleteMultSigners(t *testing.T) {
 	txSourceAccount := NewSimpleAccount(kp0.Address(), int64(9605939170639898))
 
 	kp1 := newKeypair1()
-	opSourceAccount := NewSimpleAccount(kp1.Address(), int64(9606132444168199))
+	opSourceAccount := kp1.Address()
 
 	offerID := int64(2921622)
-	deleteOffer, err := DeleteOfferOp(offerID, &opSourceAccount)
+	deleteOffer, err := DeleteOfferOp(offerID, opSourceAccount)
 	check(err)
 
 	tx := Transaction{
@@ -260,14 +260,14 @@ func TestManageOfferUpdateMultSigners(t *testing.T) {
 	txSourceAccount := NewSimpleAccount(kp0.Address(), int64(9605939170639898))
 
 	kp1 := newKeypair1()
-	opSourceAccount := NewSimpleAccount(kp1.Address(), int64(9606132444168199))
+	opSourceAccount := kp1.Address()
 
 	selling := NativeAsset{}
 	buying := CreditAsset{"ABCD", kp0.Address()}
 	sellAmount := "50"
 	price := "0.02"
 	offerID := int64(2497628)
-	updateOffer, err := UpdateOfferOp(selling, buying, sellAmount, price, offerID, &opSourceAccount)
+	updateOffer, err := UpdateOfferOp(selling, buying, sellAmount, price, offerID, opSourceAccount)
 	check(err)
 
 	tx := Transaction{
@@ -287,7 +287,7 @@ func TestPathPaymentMultSigners(t *testing.T) {
 	txSourceAccount := NewSimpleAccount(kp0.Address(), int64(9605939170639898))
 
 	kp1 := newKeypair1()
-	opSourceAccount := NewSimpleAccount(kp1.Address(), int64(9606132444168199))
+	opSourceAccount := kp1.Address()
 
 	abcdAsset := CreditAsset{"ABCD", kp0.Address()}
 	pathPayment := PathPayment{
@@ -297,7 +297,7 @@ func TestPathPaymentMultSigners(t *testing.T) {
 		DestAsset:     NativeAsset{},
 		DestAmount:    "1",
 		Path:          []Asset{abcdAsset},
-		SourceAccount: &opSourceAccount,
+		SourceAccount: opSourceAccount,
 	}
 
 	tx := Transaction{
@@ -318,13 +318,13 @@ func TestPaymentMultSigners(t *testing.T) {
 	txSourceAccount := NewSimpleAccount(kp0.Address(), int64(9605939170639898))
 
 	kp1 := newKeypair1()
-	opSourceAccount := NewSimpleAccount(kp1.Address(), int64(9606132444168199))
+	opSourceAccount := kp1.Address()
 
 	payment := Payment{
 		Destination:   "GB7BDSZU2Y27LYNLALKKALB52WS2IZWYBDGY6EQBLEED3TJOCVMZRH7H",
 		Amount:        "10",
 		Asset:         NativeAsset{},
-		SourceAccount: &opSourceAccount,
+		SourceAccount: opSourceAccount,
 	}
 
 	tx := Transaction{
@@ -344,11 +344,11 @@ func TestSetOptionsMultSigners(t *testing.T) {
 	txSourceAccount := NewSimpleAccount(kp0.Address(), int64(9605939170639898))
 
 	kp1 := newKeypair1()
-	opSourceAccount := NewSimpleAccount(kp1.Address(), int64(9606132444168199))
+	opSourceAccount := kp1.Address()
 
 	setOptions := SetOptions{
 		SetFlags:      []AccountFlag{AuthRequired, AuthRevocable},
-		SourceAccount: &opSourceAccount,
+		SourceAccount: opSourceAccount,
 	}
 
 	tx := Transaction{
