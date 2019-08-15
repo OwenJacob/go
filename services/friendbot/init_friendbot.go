@@ -84,7 +84,7 @@ func createMinionAccounts(botAccount internal.Account, botKeypair *keypair.Full,
 			newMinions = append(newMinions, internal.Minion{
 				Account:           internal.Account{AccountID: minionKeypair.Address()},
 				Keypair:           minionKeypair,
-				BotAccount:        botAccount,
+				BotAccount:        botAccount.AccountID,
 				BotKeypair:        botKeypair,
 				Horizon:           hclient,
 				Network:           networkPassphrase,

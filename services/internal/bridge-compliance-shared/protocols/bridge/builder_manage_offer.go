@@ -52,7 +52,7 @@ func (op ManageOfferOperationBody) Build() txnbuild.Operation {
 	}
 
 	if op.Source != nil {
-		txnOp.SourceAccount = &txnbuild.SimpleAccount{AccountID: *op.Source}
+		txnOp.SourceAccount = *op.Source
 	}
 
 	return &txnOp
