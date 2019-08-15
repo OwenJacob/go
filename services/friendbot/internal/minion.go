@@ -102,7 +102,7 @@ func (minion *Minion) checkHandleBadSequence(err *horizonclient.Error) {
 func (minion *Minion) makeTx(destAddress string) (string, error) {
 	createAccountOp := txnbuild.CreateAccount{
 		Destination:   destAddress,
-		SourceAccount: minion.BotAccount,
+		SourceAccount: minion.BotAccount.GetAccountID(),
 		Amount:        minion.StartingBalance,
 	}
 	txn := txnbuild.Transaction{

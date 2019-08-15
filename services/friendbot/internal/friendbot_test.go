@@ -23,7 +23,7 @@ func TestFriendbot_Pay(t *testing.T) {
 	if !assert.NoError(t, err) {
 		return
 	}
-	botAccount := Account{AccountID: botKeypair.Address()}
+	botAccount := botKeypair.Address()
 
 	// Public key: GD4AGPPDFFHKK3Z2X4XZDRXX6GZQKP4FMLVQ5T55NDEYGG3GIP7BQUHM
 	minionSeed := "SDTNSEERJPJFUE2LSDNYBFHYGVTPIWY7TU2IOJZQQGLWO2THTGB7NU5A"
