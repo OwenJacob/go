@@ -22,7 +22,7 @@ func (op AllowTrustOperationBody) Build() txnbuild.Operation {
 	}
 
 	if op.Source != nil {
-		txnOp.SourceAccount = &txnbuild.SimpleAccount{AccountID: *op.Source}
+		txnOp.SourceAccount = *op.Source
 		txnOp.Type = txnbuild.CreditAsset{Code: op.AssetCode, Issuer: *op.Source}
 	}
 
