@@ -56,14 +56,6 @@ func operationFromXDR(xdrOp xdr.Operation) (Operation, error) {
 	return newOp, err
 }
 
-// accountFromXDR returns a txnbuild Account from a XDR Account.
-// func accountFromXDR(account *xdr.AccountId) Account {
-// 	if account != nil {
-// 		return &SimpleAccount{AccountID: account.Address()}
-// 	}
-// 	return nil
-// }
-
 // accountIDFromXDR returns an Account ID string from a XDR Account.
 func accountIDFromXDR(account *xdr.AccountId) string {
 	if account != nil {
