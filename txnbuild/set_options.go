@@ -60,7 +60,7 @@ type SetOptions struct {
 	HomeDomain           *string
 	Signer               *Signer
 	xdrOp                xdr.SetOptionsOp
-	SourceAccount        Account
+	SourceAccount        string
 }
 
 // BuildXDR for SetOptions returns a fully configured XDR Operation.
@@ -296,7 +296,7 @@ func (so *SetOptions) FromXDR(xdrOp xdr.Operation) error {
 		return errors.New("error parsing set_options operation from xdr")
 	}
 
-	so.SourceAccount = accountFromXDR(xdrOp.SourceAccount)
+	so.SourceAccount = accountIDFromXDR(xdrOp.SourceAccount)
 	so.handleInflationXDR(result.InflationDest)
 	so.handleClearFlagsXDR(result.ClearFlags)
 	so.handleSetFlagsXDR(result.SetFlags)

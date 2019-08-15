@@ -9,7 +9,7 @@ import (
 // https://www.stellar.org/developers/guides/concepts/list-of-operations.html
 type BumpSequence struct {
 	BumpTo        int64
-	SourceAccount Account
+	SourceAccount string
 }
 
 // BuildXDR for BumpSequence returns a fully configured XDR Operation.
@@ -32,7 +32,7 @@ func (bs *BumpSequence) FromXDR(xdrOp xdr.Operation) error {
 		return errors.New("error parsing bump_sequence operation from xdr")
 	}
 
-	bs.SourceAccount = accountFromXDR(xdrOp.SourceAccount)
+	bs.SourceAccount = accountIDFromXDR(xdrOp.SourceAccount)
 	bs.BumpTo = int64(result.BumpTo)
 	return nil
 }

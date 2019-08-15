@@ -12,7 +12,7 @@ type Payment struct {
 	Destination   string
 	Amount        string
 	Asset         Asset
-	SourceAccount Account
+	SourceAccount string
 }
 
 // BuildXDR for Payment returns a fully configured XDR Operation.
@@ -59,7 +59,7 @@ func (p *Payment) FromXDR(xdrOp xdr.Operation) error {
 		return errors.New("error parsing payment operation from xdr")
 	}
 
-	p.SourceAccount = accountFromXDR(xdrOp.SourceAccount)
+	p.SourceAccount = accountIDFromXDR(xdrOp.SourceAccount)
 	p.Destination = result.Destination.Address()
 	p.Amount = amount.String(result.Amount)
 

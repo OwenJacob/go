@@ -15,7 +15,7 @@ type ManageBuyOffer struct {
 	Amount        string
 	Price         string
 	OfferID       int64
-	SourceAccount Account
+	SourceAccount string
 }
 
 // BuildXDR for ManageBuyOffer returns a fully configured XDR Operation.
@@ -65,7 +65,7 @@ func (mo *ManageBuyOffer) FromXDR(xdrOp xdr.Operation) error {
 		return errors.New("error parsing manage_buy_offer operation from xdr")
 	}
 
-	mo.SourceAccount = accountFromXDR(xdrOp.SourceAccount)
+	mo.SourceAccount = accountIDFromXDR(xdrOp.SourceAccount)
 	mo.OfferID = int64(result.OfferId)
 	mo.Amount = amount.String(result.BuyAmount)
 	if result.Price != (xdr.Price{}) {

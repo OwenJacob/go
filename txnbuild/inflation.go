@@ -8,7 +8,7 @@ import (
 // Inflation represents the Stellar inflation operation. See
 // https://www.stellar.org/developers/guides/concepts/list-of-operations.html
 type Inflation struct {
-	SourceAccount Account
+	SourceAccount string
 }
 
 // BuildXDR for Inflation returns a fully configured XDR Operation.
@@ -28,6 +28,6 @@ func (inf *Inflation) FromXDR(xdrOp xdr.Operation) error {
 	if xdrOp.Body.Type != xdr.OperationTypeInflation {
 		return errors.New("error parsing inflation operation from xdr")
 	}
-	inf.SourceAccount = accountFromXDR(xdrOp.SourceAccount)
+	inf.SourceAccount = accountIDFromXDR(xdrOp.SourceAccount)
 	return nil
 }

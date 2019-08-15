@@ -14,7 +14,7 @@ import (
 type ChangeTrust struct {
 	Line          Asset
 	Limit         string
-	SourceAccount Account
+	SourceAccount string
 }
 
 // MaxTrustlineLimit represents the maximum value that can be set as a trustline limit.
@@ -69,7 +69,7 @@ func (ct *ChangeTrust) FromXDR(xdrOp xdr.Operation) error {
 		return errors.New("error parsing change_trust operation from xdr")
 	}
 
-	ct.SourceAccount = accountFromXDR(xdrOp.SourceAccount)
+	ct.SourceAccount = accountIDFromXDR(xdrOp.SourceAccount)
 	ct.Limit = amount.String(result.Limit)
 	asset, err := assetFromXDR(result.Line)
 	if err != nil {

@@ -11,7 +11,7 @@ import (
 type CreateAccount struct {
 	Destination   string
 	Amount        string
-	SourceAccount Account
+	SourceAccount string
 }
 
 // BuildXDR for CreateAccount returns a fully configured XDR Operation.
@@ -45,7 +45,7 @@ func (ca *CreateAccount) FromXDR(xdrOp xdr.Operation) error {
 		return errors.New("error parsing create_account operation from xdr")
 	}
 
-	ca.SourceAccount = accountFromXDR(xdrOp.SourceAccount)
+	ca.SourceAccount = accountIDFromXDR(xdrOp.SourceAccount)
 	ca.Destination = result.Destination.Address()
 	ca.Amount = amount.String(result.StartingBalance)
 

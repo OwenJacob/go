@@ -239,11 +239,6 @@ func BuildChallengeTx(serverSignerSecret, clientAccountID, anchorName, network s
 		Sequence: int64(-1),
 	}
 
-	// represent client account as SimpleAccount
-	ca := SimpleAccount{
-		AccountID: clientAccountID,
-	}
-
 	if timebound == 0 {
 		return "", errors.New("timebound cannot be 0")
 	}
@@ -257,7 +252,7 @@ func BuildChallengeTx(serverSignerSecret, clientAccountID, anchorName, network s
 		SourceAccount: &sa,
 		Operations: []Operation{
 			&ManageData{
-				SourceAccount: &ca,
+				SourceAccount: clientAccountID,
 				Name:          anchorName + " auth",
 				Value:         []byte(randomNonceToString),
 			},
@@ -452,7 +447,7 @@ func VerifyChallengeTx(challengeTx, serverAccountID, network string) (bool, erro
 	if !ok {
 		return false, errors.New("operation type should be manage_data")
 	}
-	if op.SourceAccount == nil {
+	if op.SourceAccount == "" {
 		return false, errors.New("operation should have a source account")
 	}
 
@@ -470,7 +465,7 @@ func VerifyChallengeTx(challengeTx, serverAccountID, network string) (bool, erro
 	}
 
 	// verify signature from operation source
-	ok, err = verifyTxSignature(tx, op.SourceAccount.GetAccountID())
+	ok, err = verifyTxSignature(tx, op.SourceAccount)
 	if err != nil {
 		return ok, err
 	}

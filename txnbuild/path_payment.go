@@ -15,7 +15,7 @@ type PathPayment struct {
 	DestAsset     Asset
 	DestAmount    string
 	Path          []Asset
-	SourceAccount Account
+	SourceAccount string
 }
 
 // BuildXDR for Payment returns a fully configured XDR Operation.
@@ -93,7 +93,7 @@ func (pp *PathPayment) FromXDR(xdrOp xdr.Operation) error {
 		return errors.New("error parsing path_payment operation from xdr")
 	}
 
-	pp.SourceAccount = accountFromXDR(xdrOp.SourceAccount)
+	pp.SourceAccount = accountIDFromXDR(xdrOp.SourceAccount)
 	pp.Destination = result.Destination.Address()
 	pp.DestAmount = amount.String(result.DestAmount)
 	pp.SendMax = amount.String(result.SendMax)

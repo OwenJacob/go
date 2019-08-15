@@ -14,7 +14,7 @@ type CreatePassiveSellOffer struct {
 	Buying        Asset
 	Amount        string
 	Price         string
-	SourceAccount Account
+	SourceAccount string
 }
 
 // BuildXDR for CreatePassiveSellOffer returns a fully configured XDR Operation.
@@ -63,7 +63,7 @@ func (cpo *CreatePassiveSellOffer) FromXDR(xdrOp xdr.Operation) error {
 		return errors.New("error parsing create_passive_sell_offer operation from xdr")
 	}
 
-	cpo.SourceAccount = accountFromXDR(xdrOp.SourceAccount)
+	cpo.SourceAccount = accountIDFromXDR(xdrOp.SourceAccount)
 	cpo.Amount = amount.String(result.Amount)
 	if result.Price != (xdr.Price{}) {
 		cpo.Price = price.StringFromFloat64(float64(result.Price.N) / float64(result.Price.D))

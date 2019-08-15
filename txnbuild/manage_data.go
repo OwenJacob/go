@@ -10,7 +10,7 @@ import (
 type ManageData struct {
 	Name          string
 	Value         []byte
-	SourceAccount Account
+	SourceAccount string
 }
 
 // BuildXDR for ManageData returns a fully configured XDR Operation.
@@ -42,7 +42,7 @@ func (md *ManageData) FromXDR(xdrOp xdr.Operation) error {
 		return errors.New("error parsing create_account operation from xdr")
 	}
 
-	md.SourceAccount = accountFromXDR(xdrOp.SourceAccount)
+	md.SourceAccount = accountIDFromXDR(xdrOp.SourceAccount)
 	md.Name = string(result.DataName)
 	md.Value = *result.DataValue
 	return nil
